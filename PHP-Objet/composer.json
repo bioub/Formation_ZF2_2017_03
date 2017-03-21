@@ -1,0 +1,12 @@
+{
+  "name": "orsys/php-objet",
+  "autoload": {
+    "psr-4": {
+      "Orsys\\Model\\": "src/Namespace",
+      "Orsys\\Log\\": "src/Log"
+    }
+  },
+  "require": {
+    "psr/log": "^1.0"
+  }
+}
