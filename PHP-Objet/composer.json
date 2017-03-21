@@ -3,10 +3,12 @@
   "autoload": {
     "psr-4": {
       "Orsys\\Model\\": "src/Namespace",
-      "Orsys\\Log\\": "src/Log"
+      "Orsys\\Log\\": "src/Log",
+      "Orsys\\Injection\\": "src/Injection"
     }
   },
   "require": {
-    "psr/log": "^1.0"
+    "psr/log": "^1.0",
+    "zendframework/zend-servicemanager": "^3.3"
   }
 }
