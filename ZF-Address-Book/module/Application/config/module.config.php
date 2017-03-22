@@ -5,32 +5,63 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
-
-use Zend\Router\Http\Literal;
-use Zend\Router\Http\Segment;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
         'routes' => [
             'home' => [
-                'type' => Literal::class,
+                'type' => \Zend\Router\Http\Literal::class,
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => \Application\Controller\IndexController::class,
                         'action'     => 'index',
                     ],
                 ],
             ],
-            'application' => [
-                'type'    => Segment::class,
+            'contact' => [
+                'type' => \Zend\Router\Http\Literal::class,
                 'options' => [
-                    'route'    => '/application[/:action]',
+                    'route' => '/contacts',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        'controller' => \Application\Controller\ContactController::class,
+                        'action' => 'list',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'add' => [
+                        'type' => \Zend\Router\Http\Literal::class,
+                        'options' => [
+                            'route' => '/ajouter',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'show' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/:id',
+                            'defaults' => [
+                                'action' => 'show',
+                            ],
+                            'constraints' => [
+                                'id' => '[1-9][0-9]*'
+                            ]
+                        ],
+                    ],
+                    'list-by-company' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/societe/:id',
+                            'defaults' => [
+                                'action' => 'listByCompany',
+                            ],
+                            'constraints' => [
+                                'id' => '[1-9][0-9]*'
+                            ]
+                        ],
                     ],
                 ],
             ],
@@ -38,23 +69,29 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            \Application\Controller\IndexController::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+            \Application\Controller\ContactController::class => function(\Psr\Container\ContainerInterface $sm) {
+                $gateway = $sm->get('Application\TableGateway\Contact');
+                return new \Application\Controller\ContactController($gateway);
+            }
         ],
     ],
     'view_manager' => [
-        'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
+        'display_not_found_reason' => false,
+        'display_exceptions'       => false,
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
-        'template_map' => [
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-        ],
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
     ],
+    'service_manager' => [
+        'factories' => [
+            'Application\TableGateway\Contact' => function(\Psr\Container\ContainerInterface $sm) {
+                $adapter = $sm->get(\Zend\Db\Adapter\AdapterInterface::class);
+
+                return new \Zend\Db\TableGateway\TableGateway('contact', $adapter);
+            }
+        ]
+    ]
 ];

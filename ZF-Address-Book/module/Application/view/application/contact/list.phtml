@@ -1,0 +1,25 @@
+<?php
+/** @var $contactsList \Application\Entity\Contact[] */
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+?>
+
+<?php $this->headTitle('Liste des contacts'); ?>
+
+<?php $this->placeholder('title')
+           ->set('Liste des contacts')
+           ->setPrefix('<h2>')
+            ->setPostfix('</h2>');
+?>
+
+<table class="table table-bordered">
+    <?php foreach ($contactsList as $contact) : ?>
+    <tr>
+        <td><?=$contact->getFirstName()?> <?=$contact->getLastName()?></td>
+        <td>
+            <a class="btn btn-primary btn-xs" href="<?=$this->url('contact/show', ['id'=>$contact->getId()])?>">Afficher</a>
+            <a class="btn btn-warning btn-xs" href="#">Modifier</a>
+            <a class="btn btn-danger btn-xs" href="#">Supprimer</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
