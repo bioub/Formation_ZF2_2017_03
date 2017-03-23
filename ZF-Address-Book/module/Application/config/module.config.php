@@ -70,10 +70,7 @@ return [
     'controllers' => [
         'factories' => [
             \Application\Controller\IndexController::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
-            \Application\Controller\ContactController::class => function(\Psr\Container\ContainerInterface $sm) {
-                $contactService = $sm->get(\Application\Service\ContactServiceInterface::class);
-                return new \Application\Controller\ContactController($contactService);
-            }
+            \Application\Controller\ContactController::class => \Application\Controller\ContactControllerFactory::class
         ],
     ],
     'view_manager' => [
@@ -87,16 +84,8 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            'Application\TableGateway\Contact' => function(\Psr\Container\ContainerInterface $sm) {
-                $adapter = $sm->get(\Zend\Db\Adapter\AdapterInterface::class);
-
-                return new \Zend\Db\TableGateway\TableGateway('contact', $adapter);
-            },
-            \Application\Service\ContactZendDbService::class => function(\Psr\Container\ContainerInterface $sm) {
-                $gateway = $sm->get('Application\TableGateway\Contact');
-                $hydrator = $sm->get('HydratorManager')->get(\Zend\Hydrator\ClassMethods::class);
-                return new \Application\Service\ContactZendDbService($gateway, $hydrator);
-            }
+            'Application\TableGateway\Contact' => \Application\Gateway\ContactGatewayFactory::class,
+            \Application\Service\ContactZendDbService::class => \Application\Service\ContactZendDbServiceFactory::class
         ],
         'aliases' => [
             \Application\Service\ContactServiceInterface::class => \Application\Service\ContactZendDbService::class
