@@ -12,4 +12,16 @@ interface ContactServiceInterface
      * @return Contact[]
      */
     public function getAll();
+
+    /**
+     * Recherche un contact par id
+     * @param $id
+     * @return Contact
+     */
+    public function getById($id);
+
+    /**
+     * @param array
+     */
+    public function insert($data);
 }

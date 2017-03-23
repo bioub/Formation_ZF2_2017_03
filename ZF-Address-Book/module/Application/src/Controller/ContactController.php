@@ -3,12 +3,17 @@
 namespace Application\Controller;
 
 
+use Application\Form\ContactForm;
 use Application\Service\ContactServiceInterface;
+use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class ContactController extends AbstractActionController
 {
+    /** @var Request */
+    protected $request;
+
     /** @var ContactServiceInterface */
     protected $contactService;
 
@@ -28,12 +33,28 @@ class ContactController extends AbstractActionController
 
     public function showAction()
     {
-        return new ViewModel();
+        $id = $this->params()->fromRoute('id');
+
+        $contact = $this->contactService->getById($id);
+
+        return new ViewModel([
+            'contact' => $contact
+        ]);
     }
 
     public function addAction()
     {
-        return new ViewModel();
+        $form = new ContactForm();
+
+        if ($this->request->isPost()) {
+            $data = $this->request->getPost();
+            $this->contactService->insert($data);
+            return $this->redirect()->toRoute('contact');
+        }
+
+        return new ViewModel([
+            'contactForm' => $form
+        ]);
     }
 
     public function listByCompanyAction() {

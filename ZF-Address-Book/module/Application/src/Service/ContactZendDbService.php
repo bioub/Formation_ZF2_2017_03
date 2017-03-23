@@ -51,4 +51,22 @@ class ContactZendDbService implements ContactServiceInterface
 
         return $contacts;
     }
+
+    /**
+     * Recherche un contact par id
+     * @param $id
+     * @return Contact
+     */
+    public function getById($id)
+    {
+        // TODO: Implement getById() method.
+    }
+
+    /**
+     * @param array
+     */
+    public function insert($data)
+    {
+        // TODO: Implement insert() method.
+    }
 }

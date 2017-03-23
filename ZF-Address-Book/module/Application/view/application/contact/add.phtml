@@ -1,1 +1,12 @@
 <h2>Ajouter un contact</h2>
+<?=$this->form()->openTag($contactForm)?>
+<div>
+    <?=$this->formRow($contactForm->get('firstName'))?>
+</div>
+<div>
+    <?=$this->formRow($contactForm->get('lastName'))?>
+</div>
+<div>
+    <button type="submit">Ajouter</button>
+</div>
+<?=$this->form()->closeTag()?>

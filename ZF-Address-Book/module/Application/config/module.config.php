@@ -85,10 +85,11 @@ return [
     'service_manager' => [
         'factories' => [
             'Application\TableGateway\Contact' => \Application\Gateway\ContactGatewayFactory::class,
-            \Application\Service\ContactZendDbService::class => \Application\Service\ContactZendDbServiceFactory::class
+            \Application\Service\ContactZendDbService::class => \Application\Service\ContactZendDbServiceFactory::class,
+            \Application\Service\ContactDoctrineORMService::class => \Application\Service\ContactDoctrineORMServiceFactory::class
         ],
         'aliases' => [
-            \Application\Service\ContactServiceInterface::class => \Application\Service\ContactZendDbService::class
+            \Application\Service\ContactServiceInterface::class => \Application\Service\ContactDoctrineORMService::class
         ]
     ]
 ];

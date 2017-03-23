@@ -1,1 +1,18 @@
+<?php
+/** @var $contact \Application\Entity\Contact */
+/** @var $this \Zend\View\Renderer\PhpRenderer */
+?>
 <h2>Afficher un contact</h2>
+
+<p>Prénom : <?=$this->escapeHtml($contact->getFirstName())?></p>
+
+<p>Nom : <?=$this->escapeHtml($contact->getLastName())?></p>
+
+<?php if ($contact->getEmail()) : ?>
+<p>Email : <?=$this->escapeHtml($contact->getEmail())?></p>
+<?php endif; ?>
+
+<?php if ($contact->getPhone()) : ?>
+<p>Téléphone : <?=$this->escapeHtml($contact->getPhone())?></p>
+<?php endif; ?>
+
