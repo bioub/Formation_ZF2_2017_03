@@ -14,7 +14,7 @@
 <table class="table table-bordered">
     <?php foreach ($contactsList as $contact) : ?>
     <tr>
-        <td><?=$contact->getFirstName()?> <?=$contact->getLastName()?></td>
+        <td><?=$this->escapeHtml($contact->getFirstName())?> <?=$this->escapeHtml($contact->getLastName())?></td>
         <td>
             <a class="btn btn-primary btn-xs" href="<?=$this->url('contact/show', ['id'=>$contact->getId()])?>">Afficher</a>
             <a class="btn btn-warning btn-xs" href="#">Modifier</a>
