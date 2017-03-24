@@ -17,6 +17,15 @@ class ContactDoctrineORMService implements ContactServiceInterface
         $this->em = $em;
     }
 
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->em;
+    }
+
+
     protected function getRepository()
     {
         return $this->em->getRepository(Contact::class);

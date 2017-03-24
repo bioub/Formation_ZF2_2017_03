@@ -4,6 +4,7 @@ namespace Application\Controller;
 
 
 use Application\Form\ContactForm;
+use Application\InputFilter\ContactInputFilter;
 use Application\Service\ContactServiceInterface;
 use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -44,12 +45,19 @@ class ContactController extends AbstractActionController
 
     public function addAction()
     {
-        $form = new ContactForm();
+        $form = new ContactForm($this->contactService->getEntityManager());
 
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
-            $this->contactService->insert($data);
-            return $this->redirect()->toRoute('contact');
+            $inputFilter = new ContactInputFilter();
+            $form->setInputFilter($inputFilter);
+            $form->setData($data);
+
+            if ($form->isValid()) {
+                $dataFiltered = $form->getData();
+                $this->contactService->insert($dataFiltered);
+                return $this->redirect()->toRoute('contact');
+            }
         }
 
         return new ViewModel([

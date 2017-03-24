@@ -23,5 +23,6 @@ return [
     'Zend\Validator',
     'DoctrineModule',
     'DoctrineORMModule',
+    'StripTrailingSlash',
     'Application',
 ];

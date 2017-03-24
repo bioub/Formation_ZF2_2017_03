@@ -26,7 +26,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Application\\": "module/Application/src/"
+            "Application\\": "module/Application/src/",
+            "StripTrailingSlash\\": "module/StripTrailingSlash/src/"
         }
     },
     "autoload-dev": {
@@ -48,6 +49,7 @@
         "test": "phpunit"
     },
     "require-dev": {
-        "zendframework/zend-developer-tools": "^1.1"
+        "zendframework/zend-developer-tools": "^1.1",
+        "zendframework/zend-test": "^3.0"
     }
 }
