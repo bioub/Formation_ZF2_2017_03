@@ -71,5 +71,7 @@ class ContactDoctrineORMService implements ContactServiceInterface
         $hydrator->hydrate((array) $data, $entity);
         $this->em->persist($entity);
         $this->em->flush();
+
+        return $entity;
     }
 }
