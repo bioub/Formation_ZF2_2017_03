@@ -16,3 +16,6 @@
 <p>Téléphone : <?=$this->escapeHtml($contact->getPhone())?></p>
 <?php endif; ?>
 
+<?php if ($contact->getSociete()) : ?>
+    <p>Société : <?=$this->escapeHtml($contact->getSociete()->getName())?></p>
+<?php endif; ?>

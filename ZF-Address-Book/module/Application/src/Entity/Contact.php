@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Contact
  *
  * @ORM\Table(name="contact")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Repository\ContactRepository")
  */
 class Contact
 {
@@ -49,6 +49,12 @@ class Contact
      */
     private $phone;
 
+
+    /**
+     * @var Societe
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Societe")
+     */
+    protected $societe;
 
     /**
      * @return int
@@ -139,6 +145,26 @@ class Contact
         $this->phone = $phone;
         return $this;
     }
+
+    /**
+     * @return Societe
+     */
+    public function getSociete()
+    {
+        return $this->societe;
+    }
+
+    /**
+     * @param Societe $societe
+     * @return Contact
+     */
+    public function setSociete($societe)
+    {
+        $this->societe = $societe;
+        return $this;
+    }
+
+
 
 
 }

@@ -35,7 +35,7 @@ class ContactController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
 
-        $contact = $this->contactService->getById($id);
+        $contact = $this->contactService->getByIdWithSociete($id);
 
         return new ViewModel([
             'contact' => $contact

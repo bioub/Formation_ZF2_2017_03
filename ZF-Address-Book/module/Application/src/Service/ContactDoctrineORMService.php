@@ -41,6 +41,18 @@ class ContactDoctrineORMService implements ContactServiceInterface
 
 
     /**
+     * Recherche un contact par id en joignant sa société
+     * @param $id
+     * @return Contact
+     */
+    public function getByIdWithSociete($id)
+    {
+        $repo = $this->getRepository();
+        return $repo->findWithSociete($id);
+    }
+
+
+    /**
      * @param $data array
      */
     public function insert($data)
