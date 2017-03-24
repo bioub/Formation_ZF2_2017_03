@@ -19,6 +19,40 @@ return [
                     ],
                 ],
             ],
+            'societe' => [
+                'type' => \Zend\Router\Http\Literal::class,
+                'options' => [
+                    'route' => '/societes',
+                    'defaults' => [
+                        'controller' => \Application\Controller\SocieteController::class,
+                        'action' => 'list'
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'add' => [
+                        'type' => \Zend\Router\Http\Literal::class,
+                        'options' => [
+                            'route' => '/ajouter',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'show' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/:id',
+                            'defaults' => [
+                                'action' => 'show',
+                            ],
+                            'constraints' => [
+                                'id' => '[1-9][0-9]*'
+                            ]
+                        ],
+                    ],
+                ],
+            ],
             'contact' => [
                 'type' => \Zend\Router\Http\Literal::class,
                 'options' => [
@@ -70,7 +104,8 @@ return [
     'controllers' => [
         'factories' => [
             \Application\Controller\IndexController::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
-            \Application\Controller\ContactController::class => \Application\Controller\ContactControllerFactory::class
+            \Application\Controller\SocieteController::class => \Application\Controller\ControllerFactory::class,
+            \Application\Controller\ContactController::class => \Application\Controller\ControllerFactory::class
         ],
     ],
     'view_manager' => [
@@ -86,10 +121,12 @@ return [
         'factories' => [
             'Application\TableGateway\Contact' => \Application\Gateway\ContactGatewayFactory::class,
             \Application\Service\ContactZendDbService::class => \Application\Service\ContactZendDbServiceFactory::class,
-            \Application\Service\ContactDoctrineORMService::class => \Application\Service\ContactDoctrineORMServiceFactory::class
+            \Application\Service\ContactDoctrineORMService::class => \Application\Service\DoctrineORMServiceFactory::class,
+            \Application\Service\SocieteDoctrineORMService::class => \Application\Service\DoctrineORMServiceFactory::class
         ],
         'aliases' => [
-            \Application\Service\ContactServiceInterface::class => \Application\Service\ContactDoctrineORMService::class
+            \Application\Service\ContactServiceInterface::class => \Application\Service\ContactDoctrineORMService::class,
+            'Application\Service\SocieteServiceInterface' => \Application\Service\SocieteDoctrineORMService::class
         ]
     ]
 ];

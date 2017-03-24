@@ -49,6 +49,7 @@ class Contact
      */
     private $phone;
 
+
     /**
      * @return int
      */
